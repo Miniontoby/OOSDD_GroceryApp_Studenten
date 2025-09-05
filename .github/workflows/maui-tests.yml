@@ -4,31 +4,88 @@ on:
   push:
     branches:
       - main
-      - infra/runner-toevoegen
+      - dev
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
   pull_request:
     branches:
       - main
- 
+  workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true                     # Disable the .NET logo
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
+  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+
 jobs:
   test:
-    runs-on: ubuntu-latest  # Of windows-latest/macOS-latest als specifiek platform nodig is
+    strategy:
+      fail-fast: false
+      matrix:
+        # Bouwt nu niet voor ubuntu-latest, want daar is eigenlijk geen support voor
+        os: [windows-latest, macos-15]
+        type: [Windows, macOS, Android, iOS] # , Linux
+        exclude:
+          # Doesn't want to work... requires at least `/p:EnableWindowsTargeting=true`, but then `Assets file 'project.assets.json' doesn't have a target for 'net8.0-windows10.0.19041.0'.`
+          - os: macos-15
+            type: Windows
+
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Haal de repository op
-        uses: actions/checkout@v4
- 
+        uses: actions/checkout@v5
+
       - name: Installeer .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '8.0.x'  # Gebruik de juiste versie voor MAUI
- 
+
       - name: Installeer MAUI workloads
-        run: dotnet workload install maui-android
- 
+        run: dotnet workload install maui --ignore-failed-sources
+        if: ${{ matrix.os != 'ubuntu-latest' }}
+
+      - name: Installeer Linux MAUI workloads
+        run: dotnet workload install maui-android --ignore-failed-sources
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+
       - name: Herstel afhankelijkheden
         run: dotnet restore
- 
-      - name: Bouw de applicatie
-        run: dotnet build --configuration Release --no-restore
- 
-      - name: Voer unit tests uit
-        run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
+
+      - name: Bouw de Android applicatie
+        run: dotnet build --configuration Release -f net8.0-android --no-restore
+        if: ${{ always() && matrix.type == 'Android' }}
+      - name: Voer unit tests uit voor Android
+        run: dotnet test --configuration Release -f net8.0-android --no-restore --no-build --verbosity normal
+        if: ${{ success() && matrix.type == 'Android' }}
+
+      - name: Bouw de iOS applicatie
+        run: dotnet build --configuration Release -f net8.0-ios --no-restore
+        if: ${{ always() && matrix.type == 'iOS' }}
+      - name: Voer unit tests uit voor iOS
+        run: dotnet test --configuration Release -f net8.0-ios --no-restore --no-build --verbosity normal
+        if: ${{ success() && matrix.type == 'iOS' }}
+
+      - name: Bouw de Windows applicatie
+        run: dotnet build --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true
+        if: ${{ always() && matrix.type == 'Windows' && runner.os != 'macOS' }}
+      - name: Voer unit tests uit voor Windows
+        run: dotnet test --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true --no-restore --no-build --verbosity normal
+        if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
+
+      - name: Bouw de macOS applicatie
+        run: dotnet build --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64
+        if: ${{ always() && matrix.type == 'macOS' }}
+      - name: Voer unit tests uit voor macOS
+        run: dotnet test --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64 --no-restore --no-build --verbosity normal
+        if: ${{ success() && matrix.type == 'macOS' }}
+
+      - name: Bouw de Linux applicatie
+        # The target platform identifier linux was not recognized. 
+        run: dotnet build --configuration Release -f net8.0-linux
+        if: ${{ always() && matrix.type == 'Linux' }}
+      - name: Voer unit tests uit voor Linux
+        run: dotnet test --configuration Release --no-restore -f net8.0-linux --no-restore --no-build --verbosity normal
+        if: ${{ success() && matrix.type == 'Linux' }}
