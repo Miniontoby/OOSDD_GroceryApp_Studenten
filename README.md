@@ -30,12 +30,13 @@ Is compleet.
 ### UC04 Kiezen kleur boodschappenlijst  
 Is compleet.
 
-### UC05 Product op boodschappenlijst plaatsen:   
-- `GetAvailableProducts()`  
-	De header van de functie bestaat maar de inhoud niet.  
-	Zorg dat je een lijst maakt met de beschikbare producten (dit zijn producten waarvan nog voorraad bestaat en die niet al op de boodschappenlijst staat).  
-- `AddProduct()`   
-	Zorg dat het gekozen beschikbare product op de boodschappenlijst komt (door middel van de GroceryListItemsService).  
+### UC05 Product op boodschappenlijst plaatsen:  
+Is compleet. 
+- ~~`GetAvailableProducts()`~~  
+	~~De header van de functie bestaat maar de inhoud niet.~~  
+	~~Zorg dat je een lijst maakt met de beschikbare producten (dit zijn producten waarvan nog voorraad bestaat en die niet al op de boodschappenlijst staat).~~  
+- ~~`AddProduct()`~~   
+	~~Zorg dat het gekozen beschikbare product op de boodschappenlijst komt (door middel van de GroceryListItemsService).~~  
 
 ### UC06 Inloggen  
 Een collega is ziek maar heeft al een deel van de inlogfunctionaliteit gemaakt.  
