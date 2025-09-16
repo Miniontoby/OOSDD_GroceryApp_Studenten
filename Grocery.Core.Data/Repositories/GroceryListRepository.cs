@@ -31,12 +31,15 @@ namespace Grocery.Core.Data.Repositories
 
         public GroceryList? Get(int id)
         {
-            throw new NotImplementedException();
+            GroceryList? groceryList = groceryLists.FirstOrDefault(g => g.Id == id);
+            return groceryList;
         }
 
         public GroceryList? Update(GroceryList item)
         {
-            throw new NotImplementedException();
+            GroceryList? groceryList = groceryLists.FirstOrDefault(g => g.Id == item.Id);
+            groceryList = item;
+            return groceryList;
         }
     }
 }

@@ -13,25 +13,25 @@ namespace Grocery.Core.Services
         {
             _groceriesRepository = groceriesRepository;
             _productRepository = productRepository;
-            foreach (GroceryListItem g in _groceriesRepository.GetAll())
-            {
-                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0);
-            }
         }
 
         public List<GroceryListItem> GetAll()
         {
-            return _groceriesRepository.GetAll();
+            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll();
+            FillService(groceryListItems);
+            return groceryListItems;
         }
 
         public List<GroceryListItem> GetAllOnGroceryListId(int groceryListId)
         {
-            return _groceriesRepository.GetAll().Where(g => g.GroceryListId == groceryListId).ToList();
+            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll().Where(g => g.GroceryListId == groceryListId).ToList();
+            FillService(groceryListItems);
+            return groceryListItems;
         }
 
         public GroceryListItem Add(GroceryListItem item)
         {
-            throw new NotImplementedException();
+            return _groceriesRepository.Add(item);
         }
 
         public GroceryListItem? Delete(GroceryListItem item)
@@ -47,6 +47,14 @@ namespace Grocery.Core.Services
         public GroceryListItem? Update(GroceryListItem item)
         {
             throw new NotImplementedException();
+        }
+
+        private void FillService(List<GroceryListItem> groceryListItems)
+        {
+            foreach (GroceryListItem g in groceryListItems)
+            {
+                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0);
+            }
         }
     }
 }

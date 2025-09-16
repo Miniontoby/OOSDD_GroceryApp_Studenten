@@ -1,8 +1,11 @@
-﻿namespace Grocery.Core.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Grocery.Core.Models
 {
-    public abstract class Model(int id, string name)
+    public abstract partial class Model(int id, string name) : ObservableObject
     {
         public int Id { get; set; } = id;
-        public string Name { get; set; } = name;
+        [ObservableProperty]
+        public string name = name;
     }
 }
