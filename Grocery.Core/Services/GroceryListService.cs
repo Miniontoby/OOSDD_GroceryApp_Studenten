@@ -27,12 +27,12 @@ namespace Grocery.Core.Services
 
         public GroceryList? Get(int id)
         {
-            throw new NotImplementedException();
+            return _groceryRepository.Get(id);
         }
 
         public GroceryList? Update(GroceryList item)
         {
-            throw new NotImplementedException();
+            return _groceryRepository.Update(item);
         }
     }
 }

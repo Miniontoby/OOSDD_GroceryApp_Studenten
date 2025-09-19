@@ -1,19 +1,23 @@
-# GroceryApp Sprint 1 - Studentversie  
-In deze versie zijn de wijzigingen doorgevoerd en is de code compleet.  
+# GroceryApp - Studentversie  
 
-[![MAUI Unit Tests](https://github.com/Miniontoby/OOSDD_GroceryApp_Sprint1_Studenten/actions/workflows/maui-tests.yml/badge.svg)](https://github.com/Miniontoby/OOSDD_GroceryApp_Sprint1_Studenten/actions/workflows/maui-tests.yml)
+Huidigie versie status: bevat Sprint 1 en Sprint 2
+
+Repo link: <https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten>
+
+[![MAUI Unit Tests](https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten/actions/workflows/maui-tests.yml/badge.svg)](https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten/actions/workflows/maui-tests.yml)
 
 ## Studentversie:  
-**UC01 Tonen boodschappenlijsten**  
+
+### UC01 Tonen boodschappenlijsten  
 Is compleet.  
 
-**UC02 Tonen inhoud boodschappenlijst**  
+### UC02 Tonen inhoud boodschappenlijst  
 Is compleet.  
 ~~In het bestand `GroceryListItem.cs` uit het project Grocery.Core.Models:~~
 - ~~De member variabelen wijzigen in properties~~
 - ~~In de constructor de doorgegeven waarden koppelen aan de properties.~~
 
-**UC03 Tonen producten**  
+### UC03 Tonen producten  
 Is compleet.  
 ~~In het bestand `ProductRepository.cs` uit het project Grocery.Core.Data:~~
 - ~~Initieer in de constructor de lijst met 4 nieuwe producten:~~
@@ -22,3 +26,40 @@ Is compleet.
   - ~~Brood[voorraad 400]~~
   - ~~Cornflakes[voorraad 0]~~
 - ~~In de methode GetAll() zorg je dat de lijst met producten wordt meegegeven.~~
+
+
+
+### UC04 Kiezen kleur boodschappenlijst  
+Is compleet.
+
+### UC05 Product op boodschappenlijst plaatsen:  
+Is compleet. 
+- ~~`GetAvailableProducts()`~~  
+	~~De header van de functie bestaat maar de inhoud niet.~~  
+	~~Zorg dat je een lijst maakt met de beschikbare producten (dit zijn producten waarvan nog voorraad bestaat en die niet al op de boodschappenlijst staat).~~  
+- ~~`AddProduct()`~~   
+	~~Zorg dat het gekozen beschikbare product op de boodschappenlijst komt (door middel van de GroceryListItemsService).~~  
+
+Bevat bug met viewmodel caching... Als je producten page opent, en daarna terug naar lijstje en dan een product toevoegd, dan blijft producten page zelfde aantal tonen
+Zelfde als je eerst een product toevoegt, dan naar producten en dan weer een ander product aan een lijstje toevoegt en dan weer terug naar producten
+
+### UC06 Inloggen  
+Is compleet.
+
+~~Een collega is ziek maar heeft al een deel van de inlogfunctionaliteit gemaakt.~~  
+~~Dit betreft het Loginscherm (LoginView) met bijbehorend ViewModel (LoginViewModel),~~  
+~~maar ook al een deel van de authenticatieService (AuthService in Grocery.Core),~~  
+~~de clientrepository (ClientRepository in Grocery.Core.Data)~~  
+~~en de client class (Client in Grocery.Core).~~  
+~~De opdracht is om zelfstandig de login functionaliteit te laten werken.~~  
+
+~~*Stappenplan:*~~  
+1. ~~Begin met de Client class en zorg dat er gebruik wordt gemaakt van Properties.~~  
+2. ~~In de ClientRepository wordt nu steeds een vaste client uit de lijst geretourneerd. Werk dit uit zodat de juiste Client wordt geretourneerd.~~  
+3. ~~Werk de klasse AuthService verder uit, zodat daadwerkelijk de controle op het ingevoerde password wordt uitgevoerd.~~  
+4. ~~Zorg dat de LoginView.xaml wordt toegevoegd aan het Grocery.App project in de Views folder (Add ExistingItem). De file bevindt zich al op deze plek, maar wordt nu niet meegecompileerd.~~  
+5. ~~In MauiProgram class van de Grocery.App staan de registraties van de AuthService en de LoginView in comment --> haal de // weg.~~  
+6. ~~In App.xaml.cs staat /*LoginViewModel viewModel*/ haal hier /* en */ weg, zodat het LoginViewModel beschikbaar komt.~~  
+7. ~~In App.xaml.cs staat //MainPage = new LoginView(viewModel); Haal hier de // weg en zet de regel erboven in commentaar, zodat AppShell wordt uitgeschakeld.~~  
+8. ~~Uncomment de route naar het Login scherm in AppShell.xaml.cs: //Routing.RegisterRoute("Login", typeof(LoginView));~~  
+
