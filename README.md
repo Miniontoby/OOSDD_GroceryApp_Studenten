@@ -2,6 +2,8 @@
 
 Huidigie versie status: bevat Sprint 1 en Sprint 2
 
+Repo link: <https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten>
+
 [![MAUI Unit Tests](https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten/actions/workflows/maui-tests.yml/badge.svg)](https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten/actions/workflows/maui-tests.yml)
 
 ## Studentversie:  

@@ -15,20 +15,18 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNET_NOLOGO: true                     # Disable the .NET logo
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true # Disable the .NET first time experience
-  DOTNET_CLI_TELEMETRY_OPTOUT: true       # Disable sending .NET CLI telemetry
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   test:
     strategy:
       fail-fast: false
       matrix:
-        # Bouwt nu niet voor ubuntu-latest, want daar is eigenlijk geen support voor
-        os: [windows-latest, macos-15]
+        os: [windows-latest, macos-15] # , ubuntu-latest
         type: [Windows, macOS, Android, iOS] # , Linux
         exclude:
-          # Doesn't want to work... requires at least `/p:EnableWindowsTargeting=true`, but then `Assets file 'project.assets.json' doesn't have a target for 'net8.0-windows10.0.19041.0'.`
           - os: macos-15
             type: Windows
 
@@ -41,7 +39,7 @@ jobs:
       - name: Installeer .NET SDK
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '8.0.x'  # Gebruik de juiste versie voor MAUI
+          dotnet-version: '8.0.x'
 
       - name: Installeer MAUI workloads
         run: dotnet workload install maui --ignore-failed-sources
@@ -60,6 +58,12 @@ jobs:
       - name: Voer unit tests uit voor Android
         run: dotnet test --configuration Release -f net8.0-android --no-restore --no-build --verbosity normal
         if: ${{ success() && matrix.type == 'Android' }}
+      - name: Upload Android Artifact
+        uses: actions/upload-artifact@v4
+        if: false
+        with:
+          name: GroceryApp-Android
+          path: ./Grocery.App/bin/Release/net8.0-android/*Signed.a*
 
       - name: Bouw de iOS applicatie
         run: dotnet build --configuration Release -f net8.0-ios --no-restore
@@ -67,6 +71,12 @@ jobs:
       - name: Voer unit tests uit voor iOS
         run: dotnet test --configuration Release -f net8.0-ios --no-restore --no-build --verbosity normal
         if: ${{ success() && matrix.type == 'iOS' }}
+      - name: Upload iOS Artifact
+        uses: actions/upload-artifact@v4
+        if: false
+        with:
+          name: GroceryApp-iOS
+          path: ./Grocery.App/bin/Release/net8.0-ios/**/*.app/
 
       - name: Bouw de Windows applicatie
         run: dotnet build --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true
@@ -74,6 +84,12 @@ jobs:
       - name: Voer unit tests uit voor Windows
         run: dotnet test --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true --no-restore --no-build --verbosity normal
         if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        if: false
+        with:
+          name: GroceryApp-Windows
+          path: ./Grocery.App/bin/Release/net8.0-windows*/**/*.msix
 
       - name: Bouw de macOS applicatie
         run: dotnet build --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64
@@ -81,11 +97,22 @@ jobs:
       - name: Voer unit tests uit voor macOS
         run: dotnet test --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64 --no-restore --no-build --verbosity normal
         if: ${{ success() && matrix.type == 'macOS' }}
+      - name: Upload MacCatalyst Artifact
+        uses: actions/upload-artifact@v4
+        if: false
+        with:
+          name: GroceryApp-macOS
+          path: ./Grocery.App/bin/Release/net8.0-maccatalyst/**/*.app/
 
-      - name: Bouw de Linux applicatie
-        # The target platform identifier linux was not recognized. 
+      - name: Bouw de Linux applicatie (Doesn't work)
         run: dotnet build --configuration Release -f net8.0-linux
         if: ${{ always() && matrix.type == 'Linux' }}
-      - name: Voer unit tests uit voor Linux
+      - name: Voer unit tests uit voor Linux (Doesn't work)
         run: dotnet test --configuration Release --no-restore -f net8.0-linux --no-restore --no-build --verbosity normal
         if: ${{ success() && matrix.type == 'Linux' }}
+      - name: Upload Linux Artifact (Doesn't work)
+        uses: actions/upload-artifact@v4
+        if: false
+        with:
+          name: GroceryApp-Linux
+          path: ./Grocery.App/bin/Release/net8.0-linux/**/*
