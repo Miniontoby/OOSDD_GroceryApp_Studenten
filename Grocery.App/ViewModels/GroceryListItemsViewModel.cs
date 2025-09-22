@@ -1,9 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Grocery.App.Views;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace Grocery.App.ViewModels
 {
@@ -12,16 +14,21 @@ namespace Grocery.App.ViewModels
     {
         private readonly IGroceryListItemsService _groceryListItemsService;
         private readonly IProductService _productService;
+        private readonly IFileSaverService _fileSaverService;
+        
         public ObservableCollection<GroceryListItem> MyGroceryListItems { get; set; } = [];
         public ObservableCollection<Product> AvailableProducts { get; set; } = [];
 
         [ObservableProperty]
         GroceryList groceryList = new(0, "None", DateOnly.MinValue, "", 0);
+        [ObservableProperty]
+        string myMessage;
 
-        public GroceryListItemsViewModel(IGroceryListItemsService groceryListItemsService, IProductService productService)
+        public GroceryListItemsViewModel(IGroceryListItemsService groceryListItemsService, IProductService productService, IFileSaverService fileSaverService)
         {
             _groceryListItemsService = groceryListItemsService;
             _productService = productService;
+            _fileSaverService = fileSaverService;
             Load(groceryList.Id);
         }
 
@@ -90,5 +97,22 @@ namespace Grocery.App.ViewModels
             //call OnGroceryListChanged(GroceryList);
             OnGroceryListChanged(GroceryList);
         }
+
+        [RelayCommand]
+        public async Task ShareGroceryList(CancellationToken cancellationToken)
+        {
+            if (GroceryList == null || MyGroceryListItems == null) return;
+            string jsonString = JsonSerializer.Serialize(MyGroceryListItems);
+            try
+            {
+                await _fileSaverService.SaveFileAsync("Boodschappen.json", jsonString, cancellationToken);
+                await Toast.Make("Boodschappenlijst is opgeslagen.").Show(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                await Toast.Make($"Opslaan mislukt: {ex.Message}").Show(cancellationToken);
+            }
+        }
+
     }
 }

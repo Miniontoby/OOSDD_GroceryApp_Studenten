@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Data.Repositories;
+using CommunityToolkit.Maui;
 
 namespace Grocery.App
 {
@@ -15,6 +16,7 @@ namespace Grocery.App
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -29,6 +31,7 @@ namespace Grocery.App
             builder.Services.AddSingleton<IProductService, ProductService>();
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<IClientService, ClientService>();
+            builder.Services.AddSingleton<IFileSaverService, FileSaverService>();
 
             builder.Services.AddSingleton<IGroceryListRepository, GroceryListRepository>();
             builder.Services.AddSingleton<IGroceryListItemsRepository, GroceryListItemsRepository>();
