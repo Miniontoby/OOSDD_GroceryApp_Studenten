@@ -90,7 +90,8 @@ jobs:
         if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
         with:
           name: GroceryApp-Windows--From-${{ runner.os }}
-          path: ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win-x64/**/*
+          path: |
+            ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win10-x64/**/*
 
       - name: Bouw de macOS applicatie
         run: dotnet build --configuration Release -f net8.0-maccatalyst Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=maccatalyst-x64
