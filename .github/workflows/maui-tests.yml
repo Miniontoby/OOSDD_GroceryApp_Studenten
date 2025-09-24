@@ -53,7 +53,7 @@ jobs:
         run: dotnet restore
 
       - name: Bouw de Android applicatie
-        run: dotnet build --configuration Release -f net8.0-android --no-restore
+        run: dotnet build --configuration Release -f net8.0-android Grocery.App/Grocery.App.csproj --no-restore
         if: ${{ always() && matrix.type == 'Android' }}
       - name: Voer unit tests uit voor Android
         run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
@@ -66,7 +66,7 @@ jobs:
           path: ./Grocery.App/bin/Release/net8.0-android/*Signed.a*
 
       - name: Bouw de iOS applicatie
-        run: dotnet build --configuration Release -f net8.0-ios --no-restore
+        run: dotnet build --configuration Release -f net8.0-ios Grocery.App/Grocery.App.csproj --no-restore
         if: ${{ always() && matrix.type == 'iOS' }}
       - name: Voer unit tests uit voor iOS
         run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
@@ -79,7 +79,7 @@ jobs:
           path: ./Grocery.App/bin/Release/net8.0-ios/**/*.app/
 
       - name: Bouw de Windows applicatie
-        run: dotnet build --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true
+        run: dotnet build --configuration Release -f net8.0-windows10.0.19041.0 Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true
         if: ${{ always() && matrix.type == 'Windows' && runner.os != 'macOS' }}
       - name: Voer unit tests uit voor Windows
         run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
@@ -92,7 +92,7 @@ jobs:
           path: ./Grocery.App/bin/Release/net8.0-windows*/**/*.msix
 
       - name: Bouw de macOS applicatie
-        run: dotnet build --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64
+        run: dotnet build --configuration Release -f net8.0-maccatalyst Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=maccatalyst-x64
         if: ${{ always() && matrix.type == 'macOS' }}
       - name: Voer unit tests uit voor macOS
         run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
@@ -105,7 +105,7 @@ jobs:
           path: ./Grocery.App/bin/Release/net8.0-maccatalyst/**/*.app/
 
       - name: Bouw de Linux applicatie (Doesn't work)
-        run: dotnet build --configuration Release -f net8.0-linux
+        run: dotnet build --configuration Release -f net8.0-linux Grocery.App/Grocery.App.csproj
         if: ${{ always() && matrix.type == 'Linux' }}
       - name: Voer unit tests uit voor Linux (Doesn't work)
         run: dotnet test --configuration Release --no-restore --no-restore --no-build --verbosity normal
