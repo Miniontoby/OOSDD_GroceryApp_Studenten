@@ -74,7 +74,7 @@ jobs:
         if: ${{ success() && matrix.type == 'iOS' }}
       - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
-        if: ${{ success() && matrix.type == 'iOS' }}
+        if: ${{ success() && matrix.type == 'iOS' && runner.os == 'macOS' }}
         with:
           name: GroceryApp-iOS--From-${{ runner.os }}
           path: ./Grocery.App/bin/Release/net8.0-ios/**/*.app/
@@ -90,9 +90,7 @@ jobs:
         if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
         with:
           name: GroceryApp-Windows--From-${{ runner.os }}
-          path: |
-           ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win-x64/**/*.msix
-           ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win-x64/**/*.exe
+          path: ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win-x64/**/*
 
       - name: Bouw de macOS applicatie
         run: dotnet build --configuration Release -f net8.0-maccatalyst Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=maccatalyst-x64
@@ -102,7 +100,7 @@ jobs:
         if: ${{ success() && matrix.type == 'macOS' }}
       - name: Upload MacCatalyst Artifact
         uses: actions/upload-artifact@v4
-        if: ${{ success() && matrix.type == 'macOS' }}
+        if: ${{ success() && matrix.type == 'macOS' && runner.os == 'macOS' }}
         with:
           name: GroceryApp-macOS--From-${{ runner.os }}
           path: ./Grocery.App/bin/Release/net8.0-maccatalyst/maccatalyst-x64/**/*.app/
