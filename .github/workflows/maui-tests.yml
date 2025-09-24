@@ -61,7 +61,7 @@ jobs:
         if: ${{ success() && matrix.type == 'Android' }}
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Android' }}
         with:
           name: GroceryApp-Android
           path: ./Grocery.App/bin/Release/net8.0-android/*Signed.a*
