@@ -17,6 +17,11 @@ namespace Grocery.Core.Data.Repositories
             ];
         }
 
+        public List<Client> GetAll()
+        {
+            return clientList;
+        }
+
         public Client? Get(string email)
         {
             return clientList.Find(client => client.EmailAddress.Equals(email));
@@ -27,9 +32,22 @@ namespace Grocery.Core.Data.Repositories
             return clientList.Find(client => client.Id == id);
         }
 
-        public List<Client> GetAll()
+        public Client Add(Client client)
         {
-            return clientList;
+            int newId = clientList.Max(g => g.Id) + 1;
+            client.Id = newId;
+            clientList.Add(client);
+            return Get(client.Id) ?? client;
+        }
+
+        public Client? Update(Client item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Client? Delete(Client item)
+        {
+            throw new NotImplementedException();
         }
     }
 }
