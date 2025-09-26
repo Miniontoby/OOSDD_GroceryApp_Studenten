@@ -7,6 +7,6 @@ public partial class GroceryListItemsView : ContentPage
 	public GroceryListItemsView(GroceryListItemsViewModel viewModel)
 	{
 		InitializeComponent();
-        BindingContext = viewModel;
-    }
+		BindingContext = viewModel;
+	}
 }
