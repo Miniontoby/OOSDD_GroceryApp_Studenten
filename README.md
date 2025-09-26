@@ -78,7 +78,7 @@ Is compleet.
 - ~~Werk in het viewModel (GroceryListItemsViewModel) de zoekfunctie uit en zorg dat de beschikbare producten worden gefilterd op de zoekterm!~~  
 
 ## UC09 Registratie gebruiker  
-Is compleet.
+Is compleet.  
 ~~Of een ander idee zelf uitwerken. Dit betekent ook dat de documentatie hiervoor ontwikkeld moet worden.~~  
 
   
