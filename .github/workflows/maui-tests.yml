@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - hotfix/actions-file
     paths-ignore:
       - '**/*.md'
       - '**/*.gitignore'
@@ -53,66 +54,67 @@ jobs:
         run: dotnet restore
 
       - name: Bouw de Android applicatie
-        run: dotnet build --configuration Release -f net8.0-android --no-restore
+        run: dotnet build --configuration Release -f net8.0-android Grocery.App/Grocery.App.csproj --no-restore
         if: ${{ always() && matrix.type == 'Android' }}
       - name: Voer unit tests uit voor Android
-        run: dotnet test --configuration Release -f net8.0-android --no-restore --no-build --verbosity normal
+        run: dotnet test --configuration Release TestCore/TestCore.csproj --no-restore --verbosity normal
         if: ${{ success() && matrix.type == 'Android' }}
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Android' }}
         with:
-          name: GroceryApp-Android
-          path: ./Grocery.App/bin/Release/net8.0-android/*Signed.a*
+          name: GroceryApp-Android--From-${{ runner.os }}
+          path: ./Grocery.App/bin/Release/net8.0-android/**/*Signed.a*
 
       - name: Bouw de iOS applicatie
-        run: dotnet build --configuration Release -f net8.0-ios --no-restore
+        run: dotnet build --configuration Release -f net8.0-ios Grocery.App/Grocery.App.csproj --no-restore
         if: ${{ always() && matrix.type == 'iOS' }}
       - name: Voer unit tests uit voor iOS
-        run: dotnet test --configuration Release -f net8.0-ios --no-restore --no-build --verbosity normal
+        run: dotnet test --configuration Release TestCore/TestCore.csproj --no-restore --verbosity normal
         if: ${{ success() && matrix.type == 'iOS' }}
       - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'iOS' && runner.os == 'macOS' }}
         with:
-          name: GroceryApp-iOS
+          name: GroceryApp-iOS--From-${{ runner.os }}
           path: ./Grocery.App/bin/Release/net8.0-ios/**/*.app/
 
       - name: Bouw de Windows applicatie
-        run: dotnet build --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true
+        run: dotnet build --configuration Release -f net8.0-windows10.0.19041.0 Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true
         if: ${{ always() && matrix.type == 'Windows' && runner.os != 'macOS' }}
       - name: Voer unit tests uit voor Windows
-        run: dotnet test --configuration Release -f net8.0-windows10.0.19041.0 /p:RuntimeIdentifierOverride=win-x64 /p:EnableWindowsTargeting=true --no-restore --no-build --verbosity normal
+        run: dotnet test --configuration Release TestCore/TestCore.csproj --no-restore --verbosity normal
         if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
         with:
-          name: GroceryApp-Windows
-          path: ./Grocery.App/bin/Release/net8.0-windows*/**/*.msix
+          name: GroceryApp-Windows--From-${{ runner.os }}
+          path: |
+            ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win10-x64/**/*
 
       - name: Bouw de macOS applicatie
-        run: dotnet build --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64
+        run: dotnet build --configuration Release -f net8.0-maccatalyst Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=maccatalyst-x64
         if: ${{ always() && matrix.type == 'macOS' }}
       - name: Voer unit tests uit voor macOS
-        run: dotnet test --configuration Release -f net8.0-maccatalyst /p:RuntimeIdentifierOverride=maccatalyst-x64 --no-restore --no-build --verbosity normal
+        run: dotnet test --configuration Release TestCore/TestCore.csproj --no-restore --verbosity normal
         if: ${{ success() && matrix.type == 'macOS' }}
       - name: Upload MacCatalyst Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'macOS' && runner.os == 'macOS' }}
         with:
-          name: GroceryApp-macOS
-          path: ./Grocery.App/bin/Release/net8.0-maccatalyst/**/*.app/
+          name: GroceryApp-macOS--From-${{ runner.os }}
+          path: ./Grocery.App/bin/Release/net8.0-maccatalyst/maccatalyst-x64/**/*.app/
 
       - name: Bouw de Linux applicatie (Doesn't work)
-        run: dotnet build --configuration Release -f net8.0-linux
+        run: dotnet build --configuration Release -f net8.0-linux Grocery.App/Grocery.App.csproj
         if: ${{ always() && matrix.type == 'Linux' }}
       - name: Voer unit tests uit voor Linux (Doesn't work)
-        run: dotnet test --configuration Release --no-restore -f net8.0-linux --no-restore --no-build --verbosity normal
+        run: dotnet test --configuration Release TestCore/TestCore.csproj --no-restore --verbosity normal
         if: ${{ success() && matrix.type == 'Linux' }}
       - name: Upload Linux Artifact (Doesn't work)
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Linux' }}
         with:
-          name: GroceryApp-Linux
+          name: GroceryApp-Linux--From-${{ runner.os }}
           path: ./Grocery.App/bin/Release/net8.0-linux/**/*

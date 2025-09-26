@@ -1,6 +1,6 @@
 # GroceryApp - Studentversie  
 
-Huidigie versie status: bevat Sprint 1 en Sprint 2
+Huidige versie status: bevat Sprint 1, Sprint 2 en Sprint 3
 
 Repo link: <https://github.com/Miniontoby/OOSDD_GroceryApp_Studenten>
 
@@ -27,7 +27,7 @@ Is compleet.
   - ~~Cornflakes[voorraad 0]~~
 - ~~In de methode GetAll() zorg je dat de lijst met producten wordt meegegeven.~~
 
-
+----
 
 ### UC04 Kiezen kleur boodschappenlijst  
 Is compleet.
@@ -63,3 +63,22 @@ Is compleet.
 7. ~~In App.xaml.cs staat //MainPage = new LoginView(viewModel); Haal hier de // weg en zet de regel erboven in commentaar, zodat AppShell wordt uitgeschakeld.~~  
 8. ~~Uncomment de route naar het Login scherm in AppShell.xaml.cs: //Routing.RegisterRoute("Login", typeof(LoginView));~~  
 
+----
+
+## UC07 Delen boodschappenlijst  
+Is compleet.  
+  
+## UC08 Zoeken producten  
+Is compleet.  
+
+~~Aanvullen:~~  
+- ~~In de GroceryListItemsView zitten twee Collection Views, namelijk één voor de inhoud van de boodschappenlijst en één voor producten die je toe kunt voegen aan de boodschappenlijst~~  
+- ~~Voeg boven de tweede CollectionView een zoekveld (SearchBar) in om op producten te kunnen zoeken.~~  
+- ~~Zorg dat de SearchCommand wordt gebonden aan een functie in het onderliggende ViewModel (GroceryListItemsViewModel) en dat de zoekterm die in het zoekveld is ingetypt gebruikt wordt als parameter (SearchCommandParameter).~~  
+- ~~Werk in het viewModel (GroceryListItemsViewModel) de zoekfunctie uit en zorg dat de beschikbare producten worden gefilterd op de zoekterm!~~  
+
+## UC09 Registratie gebruiker  
+Is compleet.  
+~~Of een ander idee zelf uitwerken. Dit betekent ook dat de documentatie hiervoor ontwikkeld moet worden.~~  
+
+  
