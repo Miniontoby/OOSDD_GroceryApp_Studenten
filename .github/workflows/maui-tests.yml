@@ -61,10 +61,10 @@ jobs:
         if: ${{ success() && matrix.type == 'Android' }}
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Android' }}
         with:
-          name: GroceryApp-Android
-          path: ./Grocery.App/bin/Release/net8.0-android/*Signed.a*
+          name: GroceryApp-Android--From-${{ runner.os }}
+          path: ./Grocery.App/bin/Release/net8.0-android/**/*Signed.a*
 
       - name: Bouw de iOS applicatie
         run: dotnet build --configuration Release -f net8.0-ios Grocery.App/Grocery.App.csproj --no-restore
@@ -74,9 +74,9 @@ jobs:
         if: ${{ success() && matrix.type == 'iOS' }}
       - name: Upload iOS Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'iOS' && runner.os == 'macOS' }}
         with:
-          name: GroceryApp-iOS
+          name: GroceryApp-iOS--From-${{ runner.os }}
           path: ./Grocery.App/bin/Release/net8.0-ios/**/*.app/
 
       - name: Bouw de Windows applicatie
@@ -87,10 +87,11 @@ jobs:
         if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Windows' && runner.os != 'macOS' }}
         with:
-          name: GroceryApp-Windows
-          path: ./Grocery.App/bin/Release/net8.0-windows*/**/*.msix
+          name: GroceryApp-Windows--From-${{ runner.os }}
+          path: |
+            ./Grocery.App/bin/Release/net8.0-windows10.0.19041.0/win10-x64/**/*
 
       - name: Bouw de macOS applicatie
         run: dotnet build --configuration Release -f net8.0-maccatalyst Grocery.App/Grocery.App.csproj /p:RuntimeIdentifierOverride=maccatalyst-x64
@@ -100,10 +101,10 @@ jobs:
         if: ${{ success() && matrix.type == 'macOS' }}
       - name: Upload MacCatalyst Artifact
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'macOS' && runner.os == 'macOS' }}
         with:
-          name: GroceryApp-macOS
-          path: ./Grocery.App/bin/Release/net8.0-maccatalyst/**/*.app/
+          name: GroceryApp-macOS--From-${{ runner.os }}
+          path: ./Grocery.App/bin/Release/net8.0-maccatalyst/maccatalyst-x64/**/*.app/
 
       - name: Bouw de Linux applicatie (Doesn't work)
         run: dotnet build --configuration Release -f net8.0-linux Grocery.App/Grocery.App.csproj
@@ -113,7 +114,7 @@ jobs:
         if: ${{ success() && matrix.type == 'Linux' }}
       - name: Upload Linux Artifact (Doesn't work)
         uses: actions/upload-artifact@v4
-        if: false
+        if: ${{ success() && matrix.type == 'Linux' }}
         with:
-          name: GroceryApp-Linux
+          name: GroceryApp-Linux--From-${{ runner.os }}
           path: ./Grocery.App/bin/Release/net8.0-linux/**/*
