@@ -22,7 +22,7 @@ namespace Grocery.App.ViewModels
         [ObservableProperty]
         GroceryList groceryList = new(0, "None", DateOnly.MinValue, "", 0);
         [ObservableProperty]
-        string myMessage;
+        string myMessage = "";
 
         public GroceryListItemsViewModel(IGroceryListItemsService groceryListItemsService, IProductService productService, IFileSaverService fileSaverService)
         {
@@ -39,7 +39,7 @@ namespace Grocery.App.ViewModels
             GetAvailableProducts();
         }
 
-        private void GetAvailableProducts()
+        private void GetAvailableProducts(string? search = null)
         {
             //Maak de lijst AvailableProducts leeg
             AvailableProducts.Clear();
@@ -56,7 +56,10 @@ namespace Grocery.App.ViewModels
                 {
                     //Controleer of het product al op de boodschappenlijst staat, zo niet zet het in de AvailableProducts lijst
                     if (!groceryProductIdList.Contains(product.Id))
-                        AvailableProducts.Add(product);
+                    {
+                        if (string.IsNullOrEmpty(search) || product.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
+                            AvailableProducts.Add(product);
+                    }
                 }
             }
         }
@@ -101,7 +104,7 @@ namespace Grocery.App.ViewModels
         [RelayCommand]
         public async Task ShareGroceryList(CancellationToken cancellationToken)
         {
-            if (GroceryList == null || MyGroceryListItems == null) return;
+            if (GroceryList is null || MyGroceryListItems is null) return;
             string jsonString = JsonSerializer.Serialize(MyGroceryListItems);
             try
             {
@@ -114,5 +117,11 @@ namespace Grocery.App.ViewModels
             }
         }
 
+        [RelayCommand]
+        public void PerformSearch(string query)
+        {
+            if (GroceryList is null || MyGroceryListItems is null) return;
+            GetAvailableProducts(query);
+        }
     }
 }
