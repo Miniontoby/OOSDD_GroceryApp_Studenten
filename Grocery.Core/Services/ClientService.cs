@@ -1,11 +1,6 @@
 ﻿using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Grocery.Core.Services
 {
@@ -16,7 +11,12 @@ namespace Grocery.Core.Services
         {
             _clientRepository = clientRepository;
         }
-        
+
+        public List<Client> GetAll()
+        {
+            return _clientRepository.GetAll();
+        }
+
         public Client? Get(string email)
         {
             return _clientRepository.Get(email);
@@ -27,10 +27,19 @@ namespace Grocery.Core.Services
             return _clientRepository.Get(id);
         }
 
-        public List<Client> GetAll()
+        public Client Add(Client client)
         {
-            List<Client> clients = _clientRepository.GetAll();
-            return clients;
+            return _clientRepository.Add(client);
+        }
+
+        public Client? Update(Client client)
+        {
+            return _clientRepository.Update(client);
+        }
+
+        public Client? Delete(Client client)
+        {
+            return _clientRepository.Delete(client);
         }
     }
 }
