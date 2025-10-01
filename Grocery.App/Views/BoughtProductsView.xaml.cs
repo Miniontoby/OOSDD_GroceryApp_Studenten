@@ -16,13 +16,14 @@ public partial class BoughtProductsView : ContentPage
 
     private void Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var picker = (Picker)sender;
+        Picker picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
 
         if (selectedIndex != -1)
         {
-            Product product = picker.SelectedItem as Product;
-            _viewModel.NewSelectedProduct(product);
+            Product? product = picker.SelectedItem as Product;
+            if (product is not null)
+                _viewModel.NewSelectedProduct(product);
         }
     }
 }

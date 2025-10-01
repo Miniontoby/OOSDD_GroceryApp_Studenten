@@ -10,20 +10,34 @@ namespace Grocery.App.ViewModels
     {
         public ObservableCollection<GroceryList> GroceryLists { get; set; }
         private readonly IGroceryListService _groceryListService;
+        public GlobalViewModel _global { get; set; }
 
-        public GroceryListViewModel(IGroceryListService groceryListService) 
+        public GroceryListViewModel(IGroceryListService groceryListService, GlobalViewModel global) 
         {
             Title = "Boodschappenlijst";
             _groceryListService = groceryListService;
+            _global = global;
             GroceryLists = new(_groceryListService.GetAll());
         }
 
         [RelayCommand]
         public async Task SelectGroceryList(GroceryList groceryList)
         {
-            Dictionary<string, object> paramater = new() { { nameof(GroceryList), groceryList } };
-            await Shell.Current.GoToAsync($"{nameof(Views.GroceryListItemsView)}?Titel={groceryList.Name}", true, paramater);
+            Dictionary<string, object> parameter = new() { { nameof(GroceryList), groceryList } };
+            await Shell.Current.GoToAsync($"{nameof(Views.GroceryListItemsView)}?Titel={groceryList.Name}", true, parameter);
         }
+
+        [RelayCommand]
+        public async Task ShowBoughtProducts(string clientName)
+        {
+            // maak methode ShowBoughtProducts(). Als Client rol admin heeft dan navigeer naar BoughtProductsView. Anders doe je niets.
+            if (_global.Client?.Role == Role.Admin)
+            {
+                Dictionary<string, object> parameter = new() { }; // { nameof(GroceryList), GroceryList } };
+                await Shell.Current.GoToAsync($"{nameof(Views.BoughtProductsView)}", true, parameter);
+            }
+        }
+
         public override void OnAppearing()
         {
             base.OnAppearing();

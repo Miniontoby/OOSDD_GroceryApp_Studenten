@@ -12,6 +12,10 @@
         </Grid>
     </Shell.TitleView>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Show Bought Products" Command="{Binding ShowBoughtProductsCommand}" CommandParameter="{Binding _global.Client.Name}" />
+    </ContentPage.ToolbarItems>
+
     <Border Stroke="#C49B33"
         StrokeThickness="4"
         Padding="10"
