@@ -88,8 +88,8 @@ Is compleet.
 
 ## UC11 Meest verkochte producten
 Vereist aanvulling:  
-- Werk in GroceryListItemsService de methode GetBestSellingProducts uit.  
-- In BestSellingProductsView de kop van de tabel aanvullen met de gewenste kopregel boven de tabel. Daarnaast de inhoud van de tabel uitwerken.
+- ~~Werk in GroceryListItemsService de methode GetBestSellingProducts uit.~~  
+- ~~In BestSellingProductsView de kop van de tabel aanvullen met de gewenste kopregel boven de tabel. Daarnaast de inhoud van de tabel uitwerken.~~  
 
 ## UC13 Klanten tonen per product  
 Deze UC toont de klanten die een bepaald product hebben gekocht:  
