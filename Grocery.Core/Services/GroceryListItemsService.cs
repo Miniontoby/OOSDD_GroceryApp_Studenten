@@ -82,7 +82,7 @@ namespace Grocery.Core.Services
                 bestSellingProductsList[i].Ranking = i;
             }
 
-            return bestSellingProductsList.Take(topX);
+            return bestSellingProductsList.Take(topX).ToList();
         }
 
         private void FillService(List<GroceryListItem> groceryListItems)
