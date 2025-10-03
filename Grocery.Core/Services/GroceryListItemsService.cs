@@ -29,24 +29,24 @@ namespace Grocery.Core.Services
             return groceryListItems;
         }
 
-        public GroceryListItem Add(GroceryListItem item)
-        {
-            return _groceriesRepository.Add(item);
-        }
-
-        public GroceryListItem? Delete(GroceryListItem item)
-        {
-            throw new NotImplementedException();
-        }
-
         public GroceryListItem? Get(int id)
         {
             return _groceriesRepository.Get(id);
         }
 
+        public GroceryListItem Add(GroceryListItem item)
+        {
+            return _groceriesRepository.Add(item);
+        }
+
         public GroceryListItem? Update(GroceryListItem item)
         {
             return _groceriesRepository.Update(item);
+        }
+
+        public GroceryListItem? Delete(GroceryListItem item)
+        {
+            return _groceriesRepository.Delete(item);
         }
 
         public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
@@ -75,7 +75,7 @@ namespace Grocery.Core.Services
             }
 
             List<BestSellingProducts> bestSellingProductsList = bestSellingProducts.Values.ToList();
-            bestSellingProductsList.Sort((x, y) => x.NrOfSells.CompareTo(y.NrOfSells));
+            bestSellingProductsList.Sort((a, b) => b.NrOfSells.CompareTo(a.NrOfSells));
 
             for (int i = 0; i < bestSellingProductsList.Count; i++)
             {

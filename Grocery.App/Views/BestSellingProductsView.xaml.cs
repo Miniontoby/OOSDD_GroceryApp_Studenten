@@ -16,7 +16,6 @@ public partial class BestSellingProductsView : ContentPage
         if (BindingContext is BestSellingProductsViewModel bindingContext)
         {
             bindingContext.OnAppearing();
-
         }
     }
 

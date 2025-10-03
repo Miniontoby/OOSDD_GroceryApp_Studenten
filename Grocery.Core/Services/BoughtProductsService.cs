@@ -35,7 +35,7 @@ namespace Grocery.Core.Services
 
                     foreach (GroceryListItem groceryListItemItem in groceryListItemsList)
                     {
-                        Product? product = _productRepository.Get(groceryListItemItem.Id);
+                        Product? product = _productRepository.Get(groceryListItemItem.ProductId) ?? groceryListItemItem.Product;
                         if (product is not null)
                             boughtProductsList.Add(new BoughtProducts(client, groceryListItem, product));
                     }

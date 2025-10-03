@@ -4,7 +4,7 @@ namespace Grocery.App.Views;
 
 public partial class GroceryListsView : ContentPage
 {
-    public GroceryListsView(GroceryListViewModel viewModel)
+    public GroceryListsView(GroceryListsViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -13,17 +13,16 @@ public partial class GroceryListsView : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (BindingContext is GroceryListViewModel bindingContext)
+        if (BindingContext is GroceryListsViewModel bindingContext)
         {
             bindingContext.OnAppearing();
-
         }
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        if (BindingContext is GroceryListViewModel bindingContext)
+        if (BindingContext is GroceryListsViewModel bindingContext)
         {
             bindingContext.OnDisappearing();
         }

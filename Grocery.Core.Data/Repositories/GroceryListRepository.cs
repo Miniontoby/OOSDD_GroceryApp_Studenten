@@ -19,20 +19,18 @@ namespace Grocery.Core.Data.Repositories
         {
             return groceryLists;
         }
-        public GroceryList Add(GroceryList item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GroceryList? Delete(GroceryList item)
-        {
-            throw new NotImplementedException();
-        }
 
         public GroceryList? Get(int id)
         {
-            GroceryList? groceryList = groceryLists.FirstOrDefault(g => g.Id == id);
-            return groceryList;
+            return groceryLists.FirstOrDefault(g => g.Id == id);
+        }
+
+        public GroceryList Add(GroceryList item)
+        {
+            int newId = groceryLists.Max(g => g.Id) + 1;
+            item.Id = newId;
+            groceryLists.Add(item);
+            return Get(item.Id) ?? item;
         }
 
         public GroceryList? Update(GroceryList item)
@@ -40,6 +38,11 @@ namespace Grocery.Core.Data.Repositories
             GroceryList? groceryList = groceryLists.FirstOrDefault(g => g.Id == item.Id);
             groceryList = item;
             return groceryList;
+        }
+
+        public GroceryList? Delete(GroceryList item)
+        {
+            throw new NotImplementedException();
         }
     }
 }
