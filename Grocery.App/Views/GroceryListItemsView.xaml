@@ -57,7 +57,7 @@
                 <SearchBar Placeholder="Zoek product..."
                     x:Name="searchBar"
                     SearchCommand="{Binding PerformSearchCommand}"
-                    SearchCommandParameter="{Binding Text, x:DataType='SearchBar', Source={x:Reference searchBar}}"
+                    SearchCommandParameter="{Binding Text, x:DataType='SearchBar', Source={RelativeSource Self}}"
                 />
                 <CollectionView ItemsSource="{Binding AvailableProducts}" Margin="5" WidthRequest="300" HorizontalOptions="Start"
                     SelectionMode="Single"

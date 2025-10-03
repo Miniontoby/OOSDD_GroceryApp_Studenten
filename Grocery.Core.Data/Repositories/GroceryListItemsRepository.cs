@@ -25,7 +25,12 @@ namespace Grocery.Core.Data.Repositories
 
         public List<GroceryListItem> GetAllOnGroceryListId(int id)
         {
-            return groceryListItems.Where(g => g.GroceryListId == id).ToList();
+            return groceryListItems.FindAll(g => g.GroceryListId == id);
+        }
+
+        public GroceryListItem? Get(int id)
+        {
+            return groceryListItems.FirstOrDefault(g => g.Id == id);
         }
 
         public GroceryListItem Add(GroceryListItem item)
@@ -36,17 +41,14 @@ namespace Grocery.Core.Data.Repositories
             return Get(item.Id) ?? item;
         }
 
-        public GroceryListItem? Delete(GroceryListItem item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public GroceryListItem? Get(int id)
-        {
-            return groceryListItems.FirstOrDefault(g => g.Id == id);
-        }
-
         public GroceryListItem? Update(GroceryListItem item)
+        {
+            GroceryListItem? listItem = groceryListItems.FirstOrDefault(i => i.Id == item.Id);
+            listItem = item;
+            return listItem;
+        }
+
+        public GroceryListItem? Delete(GroceryListItem item)
         {
             throw new NotImplementedException();
         }

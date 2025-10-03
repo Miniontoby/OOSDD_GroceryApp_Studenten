@@ -15,7 +15,8 @@ namespace Grocery.App.ViewModels
         private readonly IGroceryListItemsService _groceryListItemsService;
         private readonly IProductService _productService;
         private readonly IFileSaverService _fileSaverService;
-        
+        private string searchText = "";
+
         public ObservableCollection<GroceryListItem> MyGroceryListItems { get; set; } = [];
         public ObservableCollection<Product> AvailableProducts { get; set; } = [];
 
@@ -39,7 +40,7 @@ namespace Grocery.App.ViewModels
             GetAvailableProducts();
         }
 
-        private void GetAvailableProducts(string? search = null)
+        private void GetAvailableProducts()
         {
             //Maak de lijst AvailableProducts leeg
             AvailableProducts.Clear();
@@ -57,7 +58,7 @@ namespace Grocery.App.ViewModels
                     //Controleer of het product al op de boodschappenlijst staat, zo niet zet het in de AvailableProducts lijst
                     if (!groceryProductIdList.Contains(product.Id))
                     {
-                        if (string.IsNullOrEmpty(search) || product.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
+                        if (string.IsNullOrEmpty(searchText) || product.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase))
                             AvailableProducts.Add(product);
                     }
                 }
@@ -72,9 +73,10 @@ namespace Grocery.App.ViewModels
         [RelayCommand]
         public async Task ChangeColor()
         {
-            Dictionary<string, object> paramater = new() { { nameof(GroceryList), GroceryList } };
-            await Shell.Current.GoToAsync($"{nameof(ChangeColorView)}?Name={GroceryList.Name}", true, paramater);
+            Dictionary<string, object> parameter = new() { { nameof(GroceryList), GroceryList } };
+            await Shell.Current.GoToAsync($"{nameof(ChangeColorView)}?Name={GroceryList.Name}", true, parameter);
         }
+
         [RelayCommand]
         public void AddProduct(Product product)
         {
@@ -118,10 +120,38 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
-        public void PerformSearch(string query)
+        public void PerformSearch(string searchText)
         {
             if (GroceryList is null || MyGroceryListItems is null) return;
-            GetAvailableProducts(query);
+            this.searchText = searchText;
+            GetAvailableProducts();
+        }
+
+        [RelayCommand]
+        public void IncreaseAmount(int productId)
+        {
+            if (GroceryList is null || MyGroceryListItems is null) return;
+            GroceryListItem? item = MyGroceryListItems.FirstOrDefault(x => x.ProductId == productId);
+            if (item is null) return;
+            if (item.Amount >= item.Product.Stock) return;
+            item.Amount++;
+            _groceryListItemsService.Update(item);
+            item.Product.Stock--;
+            _productService.Update(item.Product);
+            OnGroceryListChanged(GroceryList);
+        }
+
+        [RelayCommand]
+        public void DecreaseAmount(int productId)
+        {
+            GroceryListItem? item = MyGroceryListItems.FirstOrDefault(x => x.ProductId == productId);
+            if (item is null) return;
+            if (item.Amount <= 0) return;
+            item.Amount--;
+            _groceryListItemsService.Update(item);
+            item.Product.Stock++;
+            _productService.Update(item.Product);
+            OnGroceryListChanged(GroceryList);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Grocery.Core.Data.Repositories
                 new(4, "Cornflakes", 0),
             ];
         }
+
         public List<Product> GetAll()
         {
             return products;
@@ -27,20 +28,22 @@ namespace Grocery.Core.Data.Repositories
 
         public Product Add(Product item)
         {
-            throw new NotImplementedException();
-        }
-
-        public Product? Delete(Product item)
-        {
-            throw new NotImplementedException();
+            int newId = products.Max(g => g.Id) + 1;
+            item.Id = newId;
+            products.Add(item);
+            return Get(item.Id) ?? item;
         }
 
         public Product? Update(Product item)
         {
             Product? product = products.FirstOrDefault(p => p.Id == item.Id);
-            if (product == null) return null;
-            product.Id = item.Id;
+            product = item;
             return product;
+        }
+
+        public Product? Delete(Product item)
+        {
+            throw new NotImplementedException();
         }
     }
 }
