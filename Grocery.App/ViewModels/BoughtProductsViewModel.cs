@@ -27,7 +27,11 @@ namespace Grocery.App.ViewModels
             if (newValue is not null)
             {
                 //Zorg dat de lijst BoughtProductsList met de gegevens die passen bij het geselecteerde product. 
-                BoughtProductsList = new(_boughtProductsService.Get(newValue.Id));
+                BoughtProductsList.Clear();
+
+                var myBoughtProductsList = _boughtProductsService.Get(newValue.Id);
+                foreach (var boughtProduct in myBoughtProductsList)
+                    BoughtProductsList.Add(boughtProduct);
             }
         }
 

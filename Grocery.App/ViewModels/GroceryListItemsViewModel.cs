@@ -76,6 +76,7 @@ namespace Grocery.App.ViewModels
             Dictionary<string, object> parameter = new() { { nameof(GroceryList), GroceryList } };
             await Shell.Current.GoToAsync($"{nameof(ChangeColorView)}?Name={GroceryList.Name}", true, parameter);
         }
+
         [RelayCommand]
         public void AddProduct(Product product)
         {
@@ -129,8 +130,9 @@ namespace Grocery.App.ViewModels
         [RelayCommand]
         public void IncreaseAmount(int productId)
         {
+            if (GroceryList is null || MyGroceryListItems is null) return;
             GroceryListItem? item = MyGroceryListItems.FirstOrDefault(x => x.ProductId == productId);
-            if (item == null) return;
+            if (item is null) return;
             if (item.Amount >= item.Product.Stock) return;
             item.Amount++;
             _groceryListItemsService.Update(item);
@@ -143,7 +145,7 @@ namespace Grocery.App.ViewModels
         public void DecreaseAmount(int productId)
         {
             GroceryListItem? item = MyGroceryListItems.FirstOrDefault(x => x.ProductId == productId);
-            if (item == null) return;
+            if (item is null) return;
             if (item.Amount <= 0) return;
             item.Amount--;
             _groceryListItemsService.Update(item);
