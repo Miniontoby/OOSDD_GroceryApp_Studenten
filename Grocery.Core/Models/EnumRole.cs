@@ -1,6 +1,7 @@
+
 namespace Grocery.Core.Models
 {
-    public enum Role
+    public enum Role : ushort
     {
         None,
         Admin

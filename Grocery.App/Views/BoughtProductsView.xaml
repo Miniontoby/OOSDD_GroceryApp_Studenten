@@ -35,8 +35,8 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Client.Name}"/>
-                            <Label Grid.Column="1" Text="{Binding GroceryList.Name}"/>
+                            <Label Grid.Column="0" Text="{Binding Client.EmailAddress}" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="{Binding GroceryList.Name}" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,10,0"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
