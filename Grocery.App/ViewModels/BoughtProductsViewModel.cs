@@ -2,8 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
+using System;
 using System.Collections.ObjectModel;
-
 
 namespace Grocery.App.ViewModels
 {
@@ -29,8 +29,8 @@ namespace Grocery.App.ViewModels
                 //Zorg dat de lijst BoughtProductsList met de gegevens die passen bij het geselecteerde product. 
                 BoughtProductsList.Clear();
 
-                var myBoughtProductsList = _boughtProductsService.Get(newValue.Id);
-                foreach (var boughtProduct in myBoughtProductsList)
+                List<BoughtProducts> myBoughtProductsList = _boughtProductsService.Get(newValue.Id);
+                foreach (BoughtProducts boughtProduct in myBoughtProductsList)
                     BoughtProductsList.Add(boughtProduct);
             }
         }

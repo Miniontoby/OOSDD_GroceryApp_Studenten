@@ -85,6 +85,27 @@ namespace Grocery.Core.Services
             return bestSellingProductsList.Take(topX).ToList();
         }
 
+        /*
+        public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
+        {
+            Dictionary<Product, int> productCount = [];
+            GetAll().ForEach(g =>
+            {
+                if (productCount.ContainsKey(g.Product)) productCount[g.Product] += g.Amount;
+                else productCount[g.Product] = 1;
+            });
+            var products = (from entry in productCount orderby entry.Value descending select entry).Take(topX);
+            List<BestSellingProducts> bestProducts = [];
+            int ranking = 0;
+            foreach (var p in products)
+            {
+                ranking++;
+                bestProducts.Add(new(p.Key.Id, p.Key.Name, p.Key.Stock, p.Value, ranking));
+            }
+            return bestProducts;
+        }
+        */
+
         private void FillService(List<GroceryListItem> groceryListItems)
         {
             foreach (GroceryListItem g in groceryListItems)

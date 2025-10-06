@@ -6,15 +6,16 @@
              xmlns:m="clr-namespace:Grocery.Core.Models;assembly=Grocery.Core"
              x:DataType="vm:GroceryListsViewModel"
              Title="GroceryListsView">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding _global.Client.Name}" Command="{Binding ShowBoughtProductsCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <Shell.TitleView>
         <Grid>
             <Label Text="Boodschappenlijsten" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Show Bought Products" Command="{Binding ShowBoughtProductsCommand}" CommandParameter="{Binding _global.Client.Name}" />
-    </ContentPage.ToolbarItems>
 
     <Border Stroke="#C49B33"
         StrokeThickness="4"

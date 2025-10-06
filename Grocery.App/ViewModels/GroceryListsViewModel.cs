@@ -27,14 +27,10 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
-        public async Task ShowBoughtProducts(string clientName)
+        public async Task ShowBoughtProducts()
         {
             // maak methode ShowBoughtProducts(). Als Client rol admin heeft dan navigeer naar BoughtProductsView. Anders doe je niets.
-            if (_global.Client?.Role == Role.Admin)
-            {
-                Dictionary<string, object> parameter = new() { }; // { nameof(GroceryList), GroceryList } };
-                await Shell.Current.GoToAsync($"{nameof(Views.BoughtProductsView)}", true, parameter);
-            }
+            if (_global.Client?.Role == Role.Admin) await Shell.Current.GoToAsync(nameof(Views.BoughtProductsView), true);
         }
 
         public override void OnAppearing()

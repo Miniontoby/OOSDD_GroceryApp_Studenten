@@ -6,20 +6,20 @@ namespace Grocery.App.ViewModels
 {
     public class ProductViewModel : BaseViewModel
     {
+        private readonly IProductService _productService;
         public ObservableCollection<Product> Products { get; set; }
-        private readonly IProductService _productSerice;
 
         public ProductViewModel(IProductService productService)
         {
-            _productSerice = productService;
-            Products = new(_productSerice.GetAll());
+            _productService = productService;
+            Products = [];
         }
 
         public override void OnAppearing()
         {
             base.OnAppearing();
             Products.Clear();
-            foreach (Product product in _productSerice.GetAll())
+            foreach (Product product in _productService.GetAll())
                 Products.Add(product);
         }
 
