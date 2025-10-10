@@ -113,7 +113,7 @@ Is compleet.
 - ~~ProductRepository --> prijsveld vullen met waarden.~~  
 - ~~ProductView uitbreiden met kolom voor de prijs (header en inhoud van de tabel).~~  
 
-## UC12 Productcategoriën toevoegen --> zelfstandig uitwerken:  
+## UC12 Productcategorieën toevoegen --> zelfstandig uitwerken:  
 Ontwerp:
 >```mermaid
 >classDiagram
@@ -154,7 +154,7 @@ Stappenplan:
 - ~~Maak ProductCategoriesViewModel.~~  
 - ~~Maak ProductCategoriesView.~~  
 - ~~Registreer De view en het ViewModel in MauiProgram.~~  
-- Zorg dat de ProductCategoriesView gestart kan worden na het klikken op een Category in CategoriesView  
+- ~~Zorg dat de ProductCategoriesView gestart kan worden na het klikken op een Category in CategoriesView~~  
 - ~~Registreer route naar ProductCategoriesView in AppShell.xaml.cs~~  
 
 
