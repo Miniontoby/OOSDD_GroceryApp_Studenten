@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Grocery.App.Views.GroceryListsView"
              xmlns:vm="clr-namespace:Grocery.App.ViewModels"
              xmlns:m="clr-namespace:Grocery.Core.Models;assembly=Grocery.Core"
-             x:DataType="vm:GroceryListsViewModel"
-             Title="GroceryListsView">
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding _global.Client.Name}" Command="{Binding ShowBoughtProductsCommand}"/>
-    </ContentPage.ToolbarItems>
-
+             x:Class="Grocery.App.Views.CategoriesView"
+             x:DataType="vm:CategoriesViewModel"
+             Title="Categories">
+    
     <Shell.TitleView>
         <Grid>
-            <Label Text="Boodschappenlijsten" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label Text="Productcategorieën" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
         </Grid>
     </Shell.TitleView>
 
@@ -22,28 +18,31 @@
         Padding="10"
         Margin="10"
         HorizontalOptions="Center">
-        <CollectionView x:Name="GroceryListView" ItemsSource="{Binding GroceryLists}" HorizontalOptions="Center"
+        <CollectionView x:Name="CategoryView" ItemsSource="{Binding Categories}" HorizontalOptions="Center"
                         SelectionMode="Single"
-                        SelectionChangedCommand="{Binding SelectGroceryListCommand}"
+                        SelectionChangedCommand="{Binding SelectCategoryCommand}"
                         SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="m:GroceryList">
+                <DataTemplate x:DataType="m:Category">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="{Binding Name}"/>
-                        <Label Grid.Column="1" Text="{Binding Date}" HorizontalOptions="End" Margin="0,0,10,0"/>
-                        <Rectangle Grid.Column="2" BackgroundColor="{Binding Color}" WidthRequest="15" HeightRequest="15" />
+                        <Label Grid.Column="0" Text="{Binding Id}"/>
+                        <Label Grid.Column="1" Text="{Binding Name}"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label Text="Er zijn geen categorieën" Margin="20" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </ContentView>
+            </CollectionView.EmptyView>
         </CollectionView>
     </Border>
 </ContentPage>

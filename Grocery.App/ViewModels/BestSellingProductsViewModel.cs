@@ -1,5 +1,4 @@
-﻿
-using Grocery.Core.Interfaces.Services;
+﻿using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
 
