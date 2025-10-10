@@ -24,7 +24,7 @@ namespace Grocery.Core.Services
 
         public List<GroceryListItem> GetAllOnGroceryListId(int groceryListId)
         {
-            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll().Where(g => g.GroceryListId == groceryListId).ToList();
+            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll().FindAll(g => g.GroceryListId == groceryListId);
             FillService(groceryListItems);
             return groceryListItems;
         }
@@ -52,12 +52,11 @@ namespace Grocery.Core.Services
         public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
         {
             Dictionary<int, BestSellingProducts> bestSellingProducts = [];
-            List<GroceryListItem> groceryListItems = GetAll();
+            List<BestSellingProducts> bestSellingProductsList = [];
 
-            foreach (GroceryListItem groceryListItem in groceryListItems)
+            foreach (GroceryListItem groceryListItem in GetAll())
             {
-                BestSellingProducts? bestSellingProduct;
-                if (bestSellingProducts.TryGetValue(groceryListItem.Product.Id, out bestSellingProduct))
+                if (bestSellingProducts.TryGetValue(groceryListItem.Product.Id, out BestSellingProducts? bestSellingProduct))
                 {
                     bestSellingProduct.NrOfSells += groceryListItem.Amount;
                 }
@@ -74,43 +73,23 @@ namespace Grocery.Core.Services
                 }
             }
 
-            List<BestSellingProducts> bestSellingProductsList = bestSellingProducts.Values.ToList();
-            bestSellingProductsList.Sort((a, b) => b.NrOfSells.CompareTo(a.NrOfSells));
+            List<BestSellingProducts> bestSellingProductsSortedList = [.. bestSellingProducts.Values];
+            bestSellingProductsSortedList.Sort((a, b) => b.NrOfSells.CompareTo(a.NrOfSells));
 
-            for (int i = 0; i < bestSellingProductsList.Count; i++)
+            for (int i = 0; i < topX; i++)
             {
-                bestSellingProductsList[i].Ranking = i;
+                bestSellingProductsSortedList[i].Ranking = i + 1;
+                bestSellingProductsList.Add(bestSellingProductsSortedList[i]);
             }
 
-            return bestSellingProductsList.Take(topX).ToList();
+            return bestSellingProductsList;
         }
-
-        /*
-        public List<BestSellingProducts> GetBestSellingProducts(int topX = 5)
-        {
-            Dictionary<Product, int> productCount = [];
-            GetAll().ForEach(g =>
-            {
-                if (productCount.ContainsKey(g.Product)) productCount[g.Product] += g.Amount;
-                else productCount[g.Product] = 1;
-            });
-            var products = (from entry in productCount orderby entry.Value descending select entry).Take(topX);
-            List<BestSellingProducts> bestProducts = [];
-            int ranking = 0;
-            foreach (var p in products)
-            {
-                ranking++;
-                bestProducts.Add(new(p.Key.Id, p.Key.Name, p.Key.Stock, p.Value, ranking));
-            }
-            return bestProducts;
-        }
-        */
 
         private void FillService(List<GroceryListItem> groceryListItems)
         {
             foreach (GroceryListItem g in groceryListItems)
             {
-                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0);
+                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0, 0.00m);
             }
         }
     }

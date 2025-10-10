@@ -109,9 +109,9 @@ Deze UC toont de klanten die een bepaald product hebben gekocht:
 Is compleet.  
 
 ## UC14 Toevoegen prijzen:  
-- Prijs toevoegen aan product class en uitbreiden constructor chain.  
-- ProductRepository --> prijsveld vullen met waarden.  
-- ProductView uitbreiden met kolom voor de prijs (header en inhoud van de tabel).      
+- ~~Prijs toevoegen aan product class en constructor chain.~~  
+- ~~ProductRepository --> prijsveld vullen met waarden.~~  
+- ~~ProductView uitbreiden met kolom voor de prijs (header en inhoud van de tabel).~~  
 
 ## UC12 Productcategoriën toevoegen --> zelfstandig uitwerken:  
 Ontwerp:
