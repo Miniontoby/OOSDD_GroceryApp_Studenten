@@ -18,7 +18,7 @@
             <ShellContent Title="Meest verkochte producten" ContentTemplate="{DataTemplate local:BestSellingProductsView}" />
         </Tab>
         <Tab Title="Categoriën" Icon="products.png">
-            <ShellContent Title="Categoriën" ContentTemplate="{DataTemplate local:CategoriesView}" />
+            <ShellContent Title="Categorieën" ContentTemplate="{DataTemplate local:CategoriesView}" />
         </Tab>
     </TabBar>
 </Shell>

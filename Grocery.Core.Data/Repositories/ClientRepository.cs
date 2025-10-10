@@ -34,7 +34,9 @@ namespace Grocery.Core.Data.Repositories
 
         public Client Add(Client client)
         {
-            int newId = clientList.Max(g => g.Id) + 1;
+            int newId = 1;
+            try { newId = clientList.Max(g => g.Id) + 1; }
+            catch { }
             client.Id = newId;
             clientList.Add(client);
             return Get(client.Id) ?? client;

@@ -30,7 +30,9 @@ namespace Grocery.Core.Data.Repositories
 
         public ProductCategory Add(ProductCategory item)
         {
-            int newId = productCategories.Max(g => g.Id) + 1;
+            int newId = 1;
+            try { newId = productCategories.Max(g => g.Id) + 1; }
+            catch { }
             item.Id = newId;
             productCategories.Add(item);
             return Get(item.Id) ?? item;
@@ -46,7 +48,10 @@ namespace Grocery.Core.Data.Repositories
 
         public ProductCategory? Delete(ProductCategory item)
         {
-            throw new NotImplementedException();
+            ProductCategory? productCategory = productCategories.FirstOrDefault(p => p.Id == item.Id);
+            if (productCategory is null) return null;
+            productCategories.Remove(productCategory);
+            return productCategory;
         }
     }
 }

@@ -27,7 +27,9 @@ namespace Grocery.Core.Data.Repositories
 
         public Category Add(Category item)
         {
-            int newId = categories.Max(g => g.Id) + 1;
+            int newId = 1;
+            try { newId = categories.Max(g => g.Id) + 1; }
+            catch { }
             item.Id = newId;
             categories.Add(item);
             return Get(item.Id) ?? item;
