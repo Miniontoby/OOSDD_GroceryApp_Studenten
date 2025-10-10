@@ -24,7 +24,7 @@ namespace Grocery.Core.Services
 
         public List<GroceryListItem> GetAllOnGroceryListId(int groceryListId)
         {
-            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAll().FindAll(g => g.GroceryListId == groceryListId);
+            List<GroceryListItem> groceryListItems = _groceriesRepository.GetAllOnGroceryListId(groceryListId);
             FillService(groceryListItems);
             return groceryListItems;
         }
@@ -76,10 +76,11 @@ namespace Grocery.Core.Services
             List<BestSellingProducts> bestSellingProductsSortedList = [.. bestSellingProducts.Values];
             bestSellingProductsSortedList.Sort((a, b) => b.NrOfSells.CompareTo(a.NrOfSells));
 
-            for (int i = 0; i < topX; i++)
+            for (int i = 0; i < bestSellingProductsSortedList.Count; i++)
             {
                 bestSellingProductsSortedList[i].Ranking = i + 1;
                 bestSellingProductsList.Add(bestSellingProductsSortedList[i]);
+                if (i >= topX) break;
             }
 
             return bestSellingProductsList;

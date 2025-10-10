@@ -140,21 +140,21 @@ Ontwerp:
 >    ProductCategory "*" -- "1" Category
 > ```
 Stappenplan:  
-- Maak class Category  
-- Maak class ProductCategory  
-- Maak Interface en Repository voor Category  
-- Maak Interface en Repository voor ProductCategory  
-- Maak Interface en Service voor Category  
-- Maak Interface en Service voor ProductCategory  
-- Registreer de gemaakte Repo's en services in MauiProgramm  
-- Maak CategoriesViewModel.  
-- Maak CategoriesView.  
-- Registreer De view en het ViewModel in MauiProgramm.  
-- Maak een menu entry in de tabbar in AppShell.xaml en registreer route in AppShell.xaml.cs  
-- Maak ProductCategoriesViewModel.  
-- Maak ProductCategoriesView.  
-- Registreer De view en het ViewModel in MauiProgramm.  
+- ~~Maak class Category~~  
+- ~~Maak class ProductCategory~~  
+- ~~Maak Interface en Repository voor Category~~  
+- ~~Maak Interface en Repository voor ProductCategory~~  
+- ~~Maak Interface en Service voor Category~~  
+- ~~Maak Interface en Service voor ProductCategory~~  
+- ~~Registreer de gemaakte Repo's en services in MauiProgram~~  
+- ~~Maak CategoriesViewModel.~~  
+- ~~Maak CategoriesView.~~  
+- ~~Registreer De view en het ViewModel in MauiProgram.~~  
+- ~~Maak een menu entry in de tabbar in AppShell.xaml en registreer route in AppShell.xaml.cs~~  
+- ~~Maak ProductCategoriesViewModel.~~  
+- ~~Maak ProductCategoriesView.~~  
+- ~~Registreer De view en het ViewModel in MauiProgram.~~  
 - Zorg dat de ProductCategoriesView gestart kan worden na het klikken op een Category in CategoriesView  
-- Registreer route naar ProductCategoriesView in AppShell.xaml.cs  
+- ~~Registreer route naar ProductCategoriesView in AppShell.xaml.cs~~  
 
 

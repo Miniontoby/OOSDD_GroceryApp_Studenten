@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Grocery.App.ViewModels"
+             xmlns:m="clr-namespace:Grocery.Core.Models;assembly=Grocery.Core"
+             x:Class="Grocery.App.Views.CategoriesView"
+             x:DataType="vm:CategoriesViewModel"
+             Title="Categories">
+    
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="Productcategoriën" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </Shell.TitleView>
+
+    <Border Stroke="#C49B33"
+        StrokeThickness="4"
+        Padding="10"
+        Margin="10"
+        HorizontalOptions="Center">
+        <CollectionView x:Name="CategoryView" ItemsSource="{Binding Categories}" HorizontalOptions="Center"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectCategoryCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:Category">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Id}"/>
+                        <Label Grid.Column="1" Text="{Binding Name}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label Text="Er zijn geen categoriën" Margin="20" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </ContentView>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Border>
+</ContentPage>
