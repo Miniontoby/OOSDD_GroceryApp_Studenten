@@ -25,7 +25,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Nummer" FontAttributes="Bold" HorizontalOptions="End" Margin="0,0,10,0"/>
+                    <Label Grid.Column="0" Text="Nummer" FontAttributes="Bold" Margin="0,0,10,0"/>
                     <Label Grid.Column="1" Text="Naam" FontAttributes="Bold"/>
                     <Label Grid.Column="2" Text="Aantal verkocht" FontAttributes="Bold" HorizontalOptions="End" />
                     <Label Grid.Column="3" Text="Aantal in voorraad" FontAttributes="Bold" HorizontalOptions="End" />
@@ -40,7 +40,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="{Binding Ranking}" HorizontalOptions="End" Margin="0,0,10,0"/>
+                        <Label Grid.Column="0" Text="{Binding Ranking}" Margin="0,0,10,0"/>
                         <Label Grid.Column="1" Text="{Binding Name}"/>
                         <Label Grid.Column="2" Text="{Binding NrOfSells}" HorizontalOptions="End" />
                         <Label Grid.Column="3" x:Name="Stock" Text="{Binding Stock}" HorizontalOptions="End" TextColor="White"/>
@@ -57,7 +57,7 @@
             <CollectionView.EmptyView>
                 <ContentView>
                     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="Er zijn geen best verkochte producten" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Label Text="Er zijn geen best verkochte producten" Margin="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </ContentView>
             </CollectionView.EmptyView>

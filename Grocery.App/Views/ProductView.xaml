@@ -49,11 +49,16 @@
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
-                        <Label Grid.Column="2" Text="{Binding Prize, StringFormat='€{0:F2}'}" HorizontalOptions="End"/>
+                        <Label Grid.Column="2" Text="{Binding Price, StringFormat='€{0:F2}'}" HorizontalOptions="End"/>
                         <Label Grid.Column="3" Text="{Binding ShelfLife}" HorizontalOptions="End"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <ContentView>
+                    <Label Text="Er zijn geen producten" Margin="20" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </ContentView>
+            </CollectionView.EmptyView>
         </CollectionView>
     </Border>
 </ContentPage>
