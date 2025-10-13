@@ -12,6 +12,8 @@ namespace Grocery.Core.Data.Repositories
                 new(1, "Groente"),
                 new(2, "Bakkerij"),
                 new(3, "Zuivel"),
+                new(4, "Conserven"),
+                new(5, "Ontbijt")
             ];
         }
 

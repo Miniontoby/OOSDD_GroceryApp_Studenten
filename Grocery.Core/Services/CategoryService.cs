@@ -8,9 +8,9 @@ namespace Grocery.Core.Services
     {
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryService(ICategoryRepository productCategoryRepository)
+        public CategoryService(ICategoryRepository categoriesRepository)
         {
-            _categoryRepository = productCategoryRepository;
+            _categoryRepository = categoriesRepository;
         }
 
         public List<Category> GetAll()

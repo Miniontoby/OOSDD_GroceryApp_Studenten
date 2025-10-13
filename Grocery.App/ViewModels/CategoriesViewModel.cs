@@ -10,9 +10,9 @@ namespace Grocery.App.ViewModels
         private readonly ICategoryService _categoryService;
         public ObservableCollection<Category> Categories { get; set; }
 
-        public CategoriesViewModel(ICategoryService productService)
+        public CategoriesViewModel(ICategoryService categoryService)
         {
-            _categoryService = productService;
+            _categoryService = categoryService;
             Categories = [];
         }
 
@@ -20,7 +20,7 @@ namespace Grocery.App.ViewModels
         public async Task SelectCategory(Category category)
         {
             Dictionary<string, object> parameter = new() { { nameof(Category), category } };
-            await Shell.Current.GoToAsync($"{nameof(Views.ProductCategoriesView)}?Titel={category.Name}", true, parameter);
+            await Shell.Current.GoToAsync($"{nameof(Views.ProductCategoriesView)}", true, parameter);
         }
 
         public override void OnAppearing()
