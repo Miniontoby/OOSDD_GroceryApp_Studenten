@@ -49,9 +49,10 @@ namespace Grocery.Core.Services
 
         private void FillService(List<ProductCategory> productCategories)
         {
-            foreach (ProductCategory g in productCategories)
+            foreach (ProductCategory pc in productCategories)
             {
-                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0, 0.00m);
+                pc.Product = _productRepository.Get(pc.ProductId) ?? new(0, "", 0);
+                pc.Category = _categoryRepository.Get(pc.CategoryId) ?? new(0, "");
             }
         }
     }
