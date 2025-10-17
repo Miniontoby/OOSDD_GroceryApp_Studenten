@@ -54,19 +54,23 @@ namespace Grocery.App.ViewModels
             }
         }
 
-        partial void OnCategoryChanged(Category value)
+        partial void OnCategoryChanged(Category? oldValue, Category newValue)
         {
-            Load(value.Id);
+            Load(newValue.Id);
         }
 
         [RelayCommand]
         public void AddProduct(Product product)
         {
             if (product is null || product.Id <= 0) return;
-            ProductCategory item = new(0, product.Id, Category.Id);
+            ProductCategory item = new(0, product.Id, Category.Id)
+            {
+                Product = product,
+                Category = Category
+            };
             _productCategoryService.Add(item);
             AvailableProducts.Remove(product);
-            OnCategoryChanged(Category);
+            OnCategoryChanged(null, Category);
         }
 
         [RelayCommand]
@@ -75,8 +79,9 @@ namespace Grocery.App.ViewModels
             ProductCategory? item = _productCategoryService.Get(productCategoryId);
             if (item is null || item.Id <= 0) return;
             _productCategoryService.Delete(item);
-            AvailableProducts.Add(item.Product);
-            OnCategoryChanged(Category);
+            Product? product = _productService.Get(item.ProductId);
+            if (product is not null) AvailableProducts.Add(product);
+            OnCategoryChanged(null, Category);
         }
 
         [RelayCommand]

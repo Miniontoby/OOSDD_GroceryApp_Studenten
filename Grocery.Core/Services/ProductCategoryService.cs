@@ -8,11 +8,13 @@ namespace Grocery.Core.Services
     {
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductCategoryService(IProductCategoryRepository productCategoryRepository, IProductRepository productRepository)
+        public ProductCategoryService(IProductCategoryRepository productCategoryRepository, IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productCategoryRepository = productCategoryRepository;
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public List<ProductCategory> GetAll()
@@ -49,9 +51,10 @@ namespace Grocery.Core.Services
 
         private void FillService(List<ProductCategory> productCategories)
         {
-            foreach (ProductCategory g in productCategories)
+            foreach (ProductCategory pc in productCategories)
             {
-                g.Product = _productRepository.Get(g.ProductId) ?? new(0, "", 0, 0.00m);
+                pc.Product = _productRepository.Get(pc.ProductId) ?? new(0, "", 0);
+                pc.Category = _categoryRepository.Get(pc.CategoryId) ?? new(0, "");
             }
         }
     }
