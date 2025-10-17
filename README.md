@@ -87,12 +87,16 @@ Is compleet.
 Is compleet.  
 
 ## UC11 Meest verkochte producten
-Vereist aanvulling:  
+Is compleet.  
+
+~~Vereist aanvulling:~~  
 - ~~Werk in GroceryListItemsService de methode GetBestSellingProducts uit.~~  
 - ~~In BestSellingProductsView de kop van de tabel aanvullen met de gewenste kopregel boven de tabel. Daarnaast de inhoud van de tabel uitwerken.~~  
 
 ## UC13 Klanten tonen per product  
 Deze UC toont de klanten die een bepaald product hebben gekocht:  
+
+Is compleet.  
 - ~~Maak enum Role met als waarden None en Admin.~~  
 - ~~Geef de Client class een property Role met als type de enum Role. De default waarde is None.~~  
 - ~~In Client Repo koppel je de rol Role.Admin aan user3 (= admin).~~  
@@ -109,11 +113,14 @@ Deze UC toont de klanten die een bepaald product hebben gekocht:
 Is compleet.  
 
 ## UC14 Toevoegen prijzen:  
+Is compleet.  
 - ~~Prijs toevoegen aan product class en constructor chain.~~  
 - ~~ProductRepository --> prijsveld vullen met waarden.~~  
 - ~~ProductView uitbreiden met kolom voor de prijs (header en inhoud van de tabel).~~  
 
 ## UC12 Productcategorieën toevoegen --> zelfstandig uitwerken:  
+Is compleet.  
+
 Ontwerp:
 >```mermaid
 >classDiagram
@@ -164,13 +171,15 @@ Stappenplan:
 Is compleet.  
 
 ## UC18 BoodschappenlijstItems in database.  
+Is compleet.  
 - ~~Gebruik het voorbeeld van UC17 om zelf de GroceryListItemsRepository te wijzigen zodat boodschappenlijstitems uit de database komen.~~  
 
-## UC19 Product in database en nieuw product aanmaken --> zelfstandig uitwerken.  
-- Volg UC17 om producten uit de database te kunnen halen.  
+## UC19 Product in database en nieuw product aanmaken  
+Is compleet.  
+- ~~Volg UC17 om producten uit de database te kunnen halen.~~  
 - ~~De Add() functie in ProductService moet uitgewerkt zijn om nieuwe producten te kunnen aanmaken.~~  
-- Maak een NewProductViewModel om het aanmaken van nieuwe producten te ondersteunen. Alleen gebruikers met de admin Role mogen nieuwe producten aanmaken.  
-- Maak een NewProductView voor het invoerscherm.  
-- Voeg een ToolbarItem toe aan de ProductView, zodat vanuit dit scherm nieuwe producten kunnen worden aangemaakt.  
-- Zorg ervoor dat als er een nieuw product is aangemaakt, deze meteen zichtbaar is in de Productlijst van de ProductView.  
-- Denk aan de registratie van de View, ViewModel en registreren van de route naar NewProductView.  
+- ~~Maak een NewProductViewModel om het aanmaken van nieuwe producten te ondersteunen. Alleen gebruikers met de admin Role mogen nieuwe producten aanmaken.~~  
+- ~~Maak een NewProductView voor het invoerscherm.~~  
+- ~~Voeg een ToolbarItem toe aan de ProductView, zodat vanuit dit scherm nieuwe producten kunnen worden aangemaakt.~~  
+- ~~Zorg ervoor dat als er een nieuw product is aangemaakt, deze meteen zichtbaar is in de Productlijst van de ProductView.~~  
+- ~~Denk aan de registratie van de View, ViewModel en registreren van de route naar NewProductView.~~  

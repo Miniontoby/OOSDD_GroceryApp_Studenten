@@ -6,6 +6,10 @@
              x:Class="Grocery.App.Views.ProductView"
              x:DataType="vm:ProductViewModel"
              Title="ProductView">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Product Toevoegen" Command="{Binding ShowNewProductCommand}"/>
+    </ContentPage.ToolbarItems>
     
     <Shell.TitleView>
         <Grid>

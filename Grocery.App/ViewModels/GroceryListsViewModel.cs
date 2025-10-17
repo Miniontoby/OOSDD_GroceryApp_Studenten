@@ -7,9 +7,10 @@ namespace Grocery.App.ViewModels
 {
     public partial class GroceryListsViewModel : BaseViewModel
     {
-        public ObservableCollection<GroceryList> GroceryLists { get; set; }
         private readonly IGroceryListService _groceryListService;
         public GlobalViewModel _global { get; set; }
+
+        public ObservableCollection<GroceryList> GroceryLists { get; set; }
 
         public GroceryListsViewModel(IGroceryListService groceryListService, GlobalViewModel global) 
         {

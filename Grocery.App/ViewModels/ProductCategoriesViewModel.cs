@@ -63,9 +63,11 @@ namespace Grocery.App.ViewModels
         public void AddProduct(Product product)
         {
             if (product is null || product.Id <= 0) return;
-            ProductCategory item = new(0, product.Id, Category.Id);
-            item.Product = product;
-            item.Category = Category;
+            ProductCategory item = new(0, product.Id, Category.Id)
+            {
+                Product = product,
+                Category = Category
+            };
             _productCategoryService.Add(item);
             AvailableProducts.Remove(product);
             OnCategoryChanged(null, Category);
@@ -77,7 +79,8 @@ namespace Grocery.App.ViewModels
             ProductCategory? item = _productCategoryService.Get(productCategoryId);
             if (item is null || item.Id <= 0) return;
             _productCategoryService.Delete(item);
-            AvailableProducts.Add(item.Product);
+            Product? product = _productService.Get(item.ProductId);
+            if (product is not null) AvailableProducts.Add(product);
             OnCategoryChanged(null, Category);
         }
 

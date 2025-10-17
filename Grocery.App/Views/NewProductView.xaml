@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Grocery.App.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Grocery.App.Views.NewProductView"
+             x:DataType="vm:NewProductViewModel"
+             Title="NewProductView">
+
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20" VerticalOptions="Center" Spacing="10">
+        <Label Text="Nieuw product" FontSize="24" HorizontalOptions="Center" />
+        <Grid ColumnSpacing="20" RowSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Text="Naam" FontAttributes="Bold" />
+            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Naam" Text="{Binding Product.Name}" Keyboard="Text">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior 
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        Flags="ValidateOnValueChanged"
+                        MinimumLength="1"
+                        MaximumLength="80" />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Grid.Row="1" Grid.Column="0" Text="Voorraad" FontAttributes="Bold" />
+            <Entry Grid.Row="1" Grid.Column="1" Placeholder="Voorraad" Text="{Binding Product.Stock}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior 
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        Flags="ValidateOnValueChanged"
+                        MinimumValue="0"
+                        MaximumDecimalPlaces="0" />
+                </Entry.Behaviors>
+            </Entry>
+            
+            <Label Grid.Row="2" Grid.Column="0" Text="THT datum" FontAttributes="Bold" />
+            <DatePicker Grid.Row="2" Grid.Column="1" Date="{Binding ShelfLifeDateTime}" Format="d" />
+            
+            <Label Grid.Row="3" Grid.Column="0" Text="Prijs" FontAttributes="Bold" />
+            <Entry Grid.Row="3" Grid.Column="1" Placeholder="Prijs" Text="{Binding Product.Price}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior 
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        Flags="ValidateOnValueChanged"
+                        MinimumValue="0.0"
+                        MaximumValue="999.99"
+                        MaximumDecimalPlaces="2" />
+                </Entry.Behaviors>
+            </Entry>
+        </Grid>
+        <Button Text="Toevoegen" Command="{Binding NewProductCommand}" />
+    </StackLayout>
+</ContentPage>
