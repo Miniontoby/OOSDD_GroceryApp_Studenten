@@ -59,12 +59,18 @@ namespace Grocery.Core.Data
 
         /// <summary>
         /// Run multiple insert queries with the same command but different values with ease!
+        /// <code>
+        /// InsertMultipleWithTransactionAndParameters(
+        ///     "INSERT INTO Users(Name, Email) VALUES (@Name, @Email)",
+        ///     [
+        ///         [new("Name", "John Doe"), new("Email", "john@doe.com")],
+        ///         [new("Name", "Charlie Kirk"), new("Email", "charlie@krik.com")]
+        ///     ]
+        /// );
+        /// </code>
         /// </summary>
         /// <param name="query">The insert query to be executed</param>
         /// <param name="parametersToInsert">The list containing a list of <see cref="SqliteParameter"/>'s</param>
-        /// <example>
-        /// InsertMultipleWithTransactionAndParameters("INSERT INTO Users(Name, Email) VALUES (@Name, @Email)", [ [new("Name", "John Doe"), new("Email", "john@doe.com")], [new("Name", "Charlie Kirk"), new("Email", "charlie@krik.com")] ]);
-        /// </example>
         public void InsertMultipleWithTransactionAndParameters(string query, List<SqliteParameter[]> parametersToInsert)
         {
             OpenConnection();
@@ -94,6 +100,7 @@ namespace Grocery.Core.Data
         public void Dispose()
         {
             CloseConnection();
+            GC.SuppressFinalize(this);
         }
     }
 }
