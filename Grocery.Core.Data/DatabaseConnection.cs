@@ -7,14 +7,14 @@ namespace Grocery.Core.Data
     public abstract class DatabaseConnection : IDisposable
     {
         protected SqliteConnection Connection { get; }
-        string databaseName;
+        private string DatabaseName { get; }
 
         public DatabaseConnection()
         {
-            databaseName = ConnectionHelper.ConnectionStringValue("GroceryAppDb");
+            DatabaseName = ConnectionHelper.ConnectionStringValue("GroceryAppDb") ?? "";
             //string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string dbpath = "Data Source="+ Path.Combine(projectDirectory + databaseName);
+            string dbpath = "Data Source="+ Path.Combine(projectDirectory + DatabaseName);
             Connection = new SqliteConnection(dbpath);
         }
 
@@ -31,11 +31,9 @@ namespace Grocery.Core.Data
         public void CreateTable(string commandText)
         {
             OpenConnection();
-            using (var command = Connection.CreateCommand())
-            {
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-            }
+            using SqliteCommand command = Connection.CreateCommand();
+            command.CommandText = commandText;
+            command.ExecuteNonQuery();
         }
 
         public void InsertMultipleWithTransaction(List<string> linesToInsert)
@@ -46,6 +44,40 @@ namespace Grocery.Core.Data
             try
             {
                 linesToInsert.ForEach(l => Connection.ExecuteNonQuery(l));
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                transaction.Rollback();
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Run multiple insert queries with the same command but different values with ease!
+        /// </summary>
+        /// <param name="query">The insert query to be executed</param>
+        /// <param name="parametersToInsert">The list containing a list of <see cref="SqliteParameter"/>'s</param>
+        /// <example>
+        /// InsertMultipleWithTransactionAndParameters("INSERT INTO Users(Name, Email) VALUES (@Name, @Email)", [ [new("Name", "John Doe"), new("Email", "john@doe.com")], [new("Name", "Charlie Kirk"), new("Email", "charlie@krik.com")] ]);
+        /// </example>
+        public void InsertMultipleWithTransactionAndParameters(string query, List<SqliteParameter[]> parametersToInsert)
+        {
+            OpenConnection();
+            var transaction = Connection.BeginTransaction();
+
+            try
+            {
+                foreach (SqliteParameter[] l in parametersToInsert)
+                {
+                    using SqliteCommand command = new(query, Connection, transaction);
+                    command.Parameters.AddRange(l);
+                    command.ExecuteNonQuery();
+                }
                 transaction.Commit();
             }
             catch (Exception ex)
