@@ -64,7 +64,7 @@ namespace Grocery.Core.Data.Repositories
         public List<GroceryListItem> GetAllOnGroceryListId(int id)
         {
             List<GroceryListItem> filteredGroceryListItems = [];
-            string selectQuery = $"SELECT Id, GroceryListId, ProductId, Amount FROM GroceryListItems WHERE GroceryListId = @GroceryListId;";
+            string selectQuery = "SELECT Id, GroceryListId, ProductId, Amount FROM GroceryListItems WHERE GroceryListId = @GroceryListId;";
             OpenConnection();
             using (SqliteCommand command = new(selectQuery, Connection))
             {
@@ -86,7 +86,7 @@ namespace Grocery.Core.Data.Repositories
 
         public GroceryListItem? Get(int id)
         {
-            string selectQuery = $"SELECT Id, GroceryListId, ProductId, Amount FROM GroceryListItems WHERE Id = @Id;";
+            string selectQuery = "SELECT Id, GroceryListId, ProductId, Amount FROM GroceryListItems WHERE Id = @Id;";
             GroceryListItem? gli = null;
             OpenConnection();
             using (SqliteCommand command = new(selectQuery, Connection))
@@ -109,7 +109,7 @@ namespace Grocery.Core.Data.Repositories
 
         public GroceryListItem Add(GroceryListItem item)
         {
-            string insertQuery = $"INSERT INTO GroceryListItems(GroceryListId, ProductId, Amount) VALUES(@GroceryListId, @ProductId, @Amount) Returning RowId;";
+            string insertQuery = "INSERT INTO GroceryListItems(GroceryListId, ProductId, Amount) VALUES(@GroceryListId, @ProductId, @Amount) Returning RowId;";
             OpenConnection();
             using (SqliteCommand command = new(insertQuery, Connection))
             {
@@ -126,7 +126,7 @@ namespace Grocery.Core.Data.Repositories
         public GroceryListItem? Update(GroceryListItem item)
         {
             int recordsAffected;
-            string updateQuery = $"UPDATE GroceryListItems SET GroceryListId = @GroceryListId, ProductId = @ProductId, Amount = @Amount WHERE Id = @Id;";
+            string updateQuery = "UPDATE GroceryListItems SET GroceryListId = @GroceryListId, ProductId = @ProductId, Amount = @Amount WHERE Id = @Id;";
             OpenConnection();
             using (SqliteCommand command = new(updateQuery, Connection))
             {
@@ -143,9 +143,13 @@ namespace Grocery.Core.Data.Repositories
 
         public GroceryListItem? Delete(GroceryListItem item)
         {
-            string deleteQuery = $"DELETE FROM GroceryListItems WHERE Id = {item.Id};";
+            string deleteQuery = "DELETE FROM GroceryListItems WHERE Id = @Id;";
             OpenConnection();
-            Connection.ExecuteNonQuery(deleteQuery);
+            using (SqliteCommand command = new(deleteQuery, Connection))
+            {
+                command.Parameters.AddWithValue("Id", item.Id);
+                command.ExecuteNonQuery();
+            }
             CloseConnection();
             return item;
         }
